@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="192.0" prefWidth="241.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.QuantityController">
+   <children>
+      <Label layoutX="7.0" layoutY="6.0" prefHeight="5.0" prefWidth="241.0" style="-fx-background-color: #9EB4F3;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label layoutX="71.0" layoutY="38.0" prefHeight="42.0" prefWidth="90.0" text="Quantity" textAlignment="CENTER">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tfQuantity" layoutX="42.0" layoutY="108.0" prefHeight="25.0" prefWidth="157.0" />
+      <Button layoutX="97.0" layoutY="145.0" mnemonicParsing="false" onAction="#addQuantity" prefHeight="25.0" prefWidth="45.0" text="Add" />
+   </children>
+</AnchorPane>

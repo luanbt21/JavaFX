@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.AmbientLight?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="1018.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ProductsController">
+   <children>
+      <TableView fx:id="tableProducts" layoutX="259.0" layoutY="92.0" prefHeight="501.0" prefWidth="759.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="49.0" text="Id" />
+          <TableColumn fx:id="colDescription" prefWidth="169.0" text="Description" />
+            <TableColumn fx:id="colPrice" prefWidth="79.0" text="Price" />
+            <TableColumn fx:id="colCategory" prefWidth="114.0" text="Category" />
+            <TableColumn fx:id="colQuantity" prefWidth="119.0" text="Quantity" />
+            <TableColumn fx:id="colWeight" prefWidth="65.0" text="Weight" />
+            <TableColumn fx:id="colImage" prefWidth="163.0" text="Image" />
+        </columns>
+      </TableView>
+      <Pane layoutX="8.0" layoutY="14.0" prefHeight="15.0" prefWidth="1000.0" style="-fx-background-color: #5dbcd2;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <VBox layoutX="7.0" layoutY="22.0" prefHeight="570.0" prefWidth="231.0">
+         <children>
+            <Pane prefHeight="191.0" prefWidth="222.0" style="-fx-border-color: #edb879;">
+               <children>
+                  <ImageView fx:id="imageView" fitHeight="166.0" fitWidth="200.0" layoutX="15.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <AmbientLight color="CHARTREUSE" lightOn="true" />
+            <Button fx:id="btnAddImage" mnemonicParsing="false" onAction="#addImage" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #44bcd8;" text="Add Image" />
+            <Label layoutX="25.0" layoutY="206.0" prefHeight="20.0" prefWidth="148.0" text="Description">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="tfDescription" layoutX="10.0" layoutY="229.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Label layoutX="10.0" layoutY="254.0" prefHeight="20.0" prefWidth="148.0" text="Price">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="tfPrice" layoutX="10.0" layoutY="229.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin></TextField>
+            <Label layoutX="10.0" layoutY="417.0" prefHeight="20.0" prefWidth="148.0" text="Quantity">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="15.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="tfQuantity" layoutX="10.0" layoutY="328.0" />
+            <Label layoutX="25.0" layoutY="424.0" prefHeight="20.0" prefWidth="148.0" text="Weight">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="15.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <ComboBox fx:id="cbWeight" layoutX="10.0" layoutY="471.0" prefHeight="30.0" prefWidth="244.0">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </ComboBox>
+            <Label layoutX="20.0" layoutY="257.0" prefHeight="20.0" prefWidth="148.0" text="Category">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="10.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <HBox prefHeight="27.0" prefWidth="260.0">
+               <children>
+                  <ComboBox fx:id="cbCategory" prefHeight="30.0" prefWidth="187.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Button mnemonicParsing="false" onAction="#addCategory" prefHeight="30.0" prefWidth="51.0" style="-fx-background-color: #44bcd8;" text="Add">
+                     <HBox.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#saveProduct" prefHeight="31.0" prefWidth="243.0" style="-fx-background-color: #44bcd8;" text="Save">
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <Button fx:id="btnUpdate" disable="true" layoutX="448.0" layoutY="37.0" mnemonicParsing="false" onAction="#editEntry" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #44bcd8;" text="Update" />
+      <Button fx:id="btnDelete" disable="true" layoutX="584.0" layoutY="37.0" mnemonicParsing="false" onAction="#deleteEntry" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #44bcd8;" text="Delete" />
+   </children>
+</AnchorPane>
