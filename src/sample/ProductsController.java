@@ -209,7 +209,7 @@ public class ProductsController implements Initializable {
                 showAlertInput();
             }
             PreparedStatement ps = connection.prepareStatement(
-                    "UPDATE products SET description = ?, price = ?, category = ?, status = ?, weight = ?, image = ? WHERE id = ?");
+                    "UPDATE products SET description = ?, price = ?, category = ?, quantity = ?, weight = ?, image = ? WHERE id = ?");
             ps.setString(1, description);
             ps.setString(2, price);
             ps.setString(3, category);
