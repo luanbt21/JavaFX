@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="479.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.BillController">
+   <children>
+      <Label layoutX="96.0" layoutY="14.0" prefHeight="30.0" prefWidth="38.0" text="Bill" textAlignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbId" layoutX="151.0" layoutY="14.0" prefHeight="30.0" prefWidth="146.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="20.0" layoutY="57.0" prefHeight="24.0" prefWidth="45.0" text="Date :">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="224.0" layoutY="57.0" prefHeight="24.0" prefWidth="58.0" text="Money :">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbDate" layoutX="65.0" layoutY="54.0" prefHeight="30.0" prefWidth="99.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbMoney" layoutX="292.0" layoutY="54.0" prefHeight="30.0" prefWidth="99.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableBill" layoutY="121.0" prefHeight="358.0" prefWidth="411.0">
+         <columns>
+            <TableColumn fx:id="colDescription" prefWidth="148.0" text="Description" />
+            <TableColumn fx:id="colPrice" prefWidth="92.0" text="Price" />
+            <TableColumn fx:id="colQuantity" prefWidth="94.0" text="Quantity" />
+            <TableColumn fx:id="colTotal" prefWidth="76.0" text="Total" />
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

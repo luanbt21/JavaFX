@@ -72,17 +72,17 @@ public class DashboardController implements Initializable {
 
     @FXML
     void cancelOrder() {
-
-    }
-
-    @FXML
-    void payment() {
-
-    }
-
-    @FXML
-    void salesReport() {
-
+        setEditToNo(lbTransaction.getText());
+        gridPane.getChildren().clear();
+        tableOrder.getItems().clear();
+        lbTotalMoney.setText("");
+        lbTable.setText("");
+        lbTransaction.setText("");
+        try{
+            openModalWindow("CancelOrder.fxml", "Select Table | Cancel Order");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     @FXML
@@ -187,6 +187,24 @@ public class DashboardController implements Initializable {
         showLableMoney(lbTransaction.getText());
     }
 
+    @FXML
+    void payment() {
+        setEditToNo(lbTransaction.getText());
+        lbTransaction.setText("");
+        lbTable.setText("");
+        lbTotalMoney.setText("");
+        tableOrder.getItems().clear();
+        gridPane.getChildren().clear();
+        try{
+            openModalWindow("Payment.fxml", "Select Table | Payment");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        lbTransaction.setText("");
+        lbTable.setText("");
+        lbTotalMoney.setText("");
+        tableOrder.getItems().clear();
+    }
 
 
     void showLableMoney(String transaction){
@@ -264,6 +282,21 @@ public class DashboardController implements Initializable {
         }
         showTableOrder(lbTransaction.getText());
         showLableMoney(lbTransaction.getText());
+    }
+
+    @FXML
+    void salesReport() {
+        setEditToNo(lbTransaction.getText());
+        lbTotalMoney.setText("");
+        lbTransaction.setText("");
+        lbTable.setText("");
+        gridPane.getChildren().clear();
+        tableOrder.getItems().clear();
+        try{
+            openModalWindow("Sales.fxml", "Sales Report");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     private void showLableTransaction() {
@@ -459,7 +492,7 @@ public class DashboardController implements Initializable {
                 newOrder = new NewOrder(rs.getString("id"), rs.getString("description"),
                         rs.getString("price"), rs.getString("date"), rs.getInt("quantity"),
                         rs.getString("total")
-                );
+                        );
                 orderList.add(newOrder);
             }
         }catch (Exception e){
