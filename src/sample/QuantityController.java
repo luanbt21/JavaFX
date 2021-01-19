@@ -25,56 +25,81 @@ public class QuantityController implements Initializable {
 
     @FXML
     void addQuantity(ActionEvent event) {
-        if(tfQuantity.getText().equals("")){
+        if (tfQuantity.getText().equals("")) {
             showAlertInput1();
-        }
-        else{
+        } else {
             try {
                 Connection connection = jdbc.getConnection();
-                if(jdbc.failed_connect_sever){
+                if (jdbc.failed_connect_sever) {
                     showAlertConnection();
                 }
                 int quantity = Integer.parseInt(tfQuantity.getText());
 
-                String query1 = "SELECT quantity FROM products WHERE description = '" + product.getDescription() +"'";
+                String query1 = "SELECT quantity FROM products WHERE description = '" + product.getDescription() + "'";
                 Statement st1;
                 ResultSet rs1;
                 String quant = null;
-                try{
+                try {
                     st1 = connection.createStatement();
                     rs1 = st1.executeQuery(query1);
-                    while (rs1.next()){
+                    while (rs1.next()) {
                         quant = rs1.getString("quantity");
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
-                if((Integer.parseInt(quant) - quantity) < 0){
+                if ((Integer.parseInt(quant) - quantity) < 0) {
                     showAlertOutOfStock(Integer.parseInt(quant), quantity);
-                }else {
+                } else {
                     int price = Integer.parseInt(product.getPrice());
-                    int total = quantity * price;
-                    PreparedStatement ps = connection.prepareStatement(
-                            "INSERT INTO ordernow (id, description, price, date, quantity, total) VALUES (?, ?, ?, ?, ?, ?) ");
-                    ps.setString(1, transaction);
-                    ps.setString(2, product.getDescription());
-                    ps.setString(3, product.getPrice());
-                    ps.setString(4, date);
-                    ps.setInt(5, quantity);
-                    ps.setInt(6, total);
-                    ps.executeUpdate();
+                    String query2 = "SELECT quantity, total FROM ordernow WHERE id = '" + transaction + "' AND description = '" + product.getDescription() + "' AND date = '" + date + "'";
+                    Statement st2;
+                    ResultSet rs2;
+                    try {
+                        st2 = connection.createStatement();
+                        rs2 = st2.executeQuery(query2);
+                        boolean check = true;
+                        while (rs2.next()) {
+                            String quantity1 = null;
+                            String total1 = null;
+                            quantity1 = rs2.getString("quantity");
+                            total1 = rs2.getString("total");
+                            PreparedStatement ps3 = connection.prepareStatement(
+                                    "UPDATE ordernow SET total = ? , quantity = ? WHERE id = ? AND description = ? ");
+                            ps3.setInt(1, Integer.parseInt(total1) + price * quantity);
+                            ps3.setInt(2, Integer.parseInt(quantity1) + quantity);
+                            ps3.setString(3, transaction);
+                            ps3.setString(4, product.getDescription());
+                            ps3.executeUpdate();
+                            check = false;
+                        }
+                        if (check) {
+                            int total = quantity * price;
+                            PreparedStatement ps = connection.prepareStatement(
+                                    "INSERT INTO ordernow (id, description, price, date, quantity, total) VALUES (?, ?, ?, ?, ?, ?) ");
+                            ps.setString(1, transaction);
+                            ps.setString(2, product.getDescription());
+                            ps.setString(3, product.getPrice());
+                            ps.setString(4, date);
+                            ps.setInt(5, quantity);
+                            ps.setInt(6, total);
+                            ps.executeUpdate();
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
 
-                    String query = "SELECT SUM(total) AS sum FROM ordernow WHERE id = '" + transaction +"'";
+                    String query = "SELECT SUM(total) AS sum FROM ordernow WHERE id = '" + transaction + "'";
                     Statement st;
                     ResultSet rs;
                     String totalmoney = null;
-                    try{
+                    try {
                         st = connection.createStatement();
                         rs = st.executeQuery(query);
-                        while (rs.next()){
+                        while (rs.next()) {
                             totalmoney = rs.getString("sum");
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
 
@@ -83,14 +108,13 @@ public class QuantityController implements Initializable {
                     ps1.setString(1, totalmoney);
                     ps1.setString(2, transaction.substring(0, transaction.indexOf("M")));
                     ps1.executeUpdate();
-
                     PreparedStatement ps2 = connection.prepareStatement(
                             "UPDATE products SET quantity = ? WHERE description = ?");
-                    ps2.setString(1, String.valueOf(Integer.parseInt(quant) - quantity) );
+                    ps2.setString(1, String.valueOf(Integer.parseInt(quant) - quantity));
                     ps2.setString(2, product.getDescription());
                     ps2.executeUpdate();
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
                 showAlertInput();
             }
@@ -102,7 +126,6 @@ public class QuantityController implements Initializable {
     }
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         jdbc = new JdbcDao();
@@ -112,7 +135,7 @@ public class QuantityController implements Initializable {
     private String transaction;
     private String date;
 
-    public void setData(Products product, String transaction, String date){
+    public void setData(Products product, String transaction, String date) {
         this.product = product;
         this.transaction = transaction;
         this.date = date;
