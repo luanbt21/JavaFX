@@ -191,7 +191,7 @@
    <center>
       <ScrollPane prefHeight="537.0" prefWidth="733.0" BorderPane.alignment="CENTER">
          <content>
-            <GridPane fx:id="gridPane" prefHeight="172.0" prefWidth="21.0">
+            <GridPane fx:id="gridPane" prefHeight="220.0" prefWidth="21.0">
               <rowConstraints>
                 <RowConstraints maxHeight="145.0" minHeight="10.0" prefHeight="135.0" vgrow="SOMETIMES" />
               </rowConstraints>

@@ -25,6 +25,8 @@ public class ItemProductController implements Initializable {
     private Label lbPrice;
     @FXML
     private ImageView imageView;
+    @FXML
+    private Label lbQuantity;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -39,9 +41,10 @@ public class ItemProductController implements Initializable {
     public void setData(Products product, String transaction, String date){
         this.product = product;
         this.transaction = transaction;
+        lbPrice.setText(product.getPrice());
         this.date = date;
         lbName.setText(product.getDescription());
-        lbPrice.setText(product.getPrice());
+        lbQuantity.setText(product.getQuantity());
         try {
             InputStream is = product.getImage().getBinaryStream();
             OutputStream os  = new FileOutputStream("photo.jpg");
@@ -55,6 +58,10 @@ public class ItemProductController implements Initializable {
         } catch (SQLException | IOException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public void setLableQuantity(String quantity){
+        lbQuantity.setText(quantity);
     }
 
 }

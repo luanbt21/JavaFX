@@ -21,10 +21,11 @@ public class Products {
         this.weight = weight;
     }
 
-    public Products(String description, String price, Blob image) {
+    public Products(String description, String price, String quantity, Blob image) {
         this.description = description;
         this.price = price;
         this.image = image;
+        this.quantity = quantity;
     }
 
     public String getWeight() {

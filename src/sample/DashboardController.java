@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DashboardController implements Initializable {
 
@@ -323,57 +324,80 @@ public class DashboardController implements Initializable {
         }
     }
 
-    private void showListProducts(String category){
-        if(isCheck_order()){
-            gridPane.getChildren().clear();
-            ObservableList<Products> list = getProductsList(category);
-            var ref = new Object() {
-                int column = 0;
-                int row = 1;
-            };
-            list.forEach((product) -> {
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader();
-                    fxmlLoader.setLocation(getClass().getResource("/sample/ItemProduct.fxml"));
-                    AnchorPane anchorPane = fxmlLoader.load();
-                    ItemProductController itemProductController = fxmlLoader.getController();
-                    itemProductController.setData(product, lbTransaction.getText(), lbDate.getText());
-                    anchorPane.setOnMouseClicked(mouseEvent -> {
-                        try{
-                            FXMLLoader fxmlLoader1 = new FXMLLoader();
-                            fxmlLoader1.setLocation(getClass().getResource("/sample/Quantity.fxml"));
-                            AnchorPane anchorPane1 = fxmlLoader1.load();
-                            QuantityController quantityController = fxmlLoader1.getController();
-                            quantityController.setData(product, lbTransaction.getText(), lbDate.getText());
-                            fxmlFile1 = new Scene(anchorPane1);
-                            window = new Stage();
-                            window.setScene(fxmlFile1);
-                            window.initModality(Modality.APPLICATION_MODAL);
-                            window.setAlwaysOnTop(true);
-                            window.setIconified(false);
-                            window.setResizable(false);
-                            window.setTitle("Choose quantity");
-                            window.showAndWait();
-                        }catch (Exception e){
-                            System.out.println(e.getMessage());
+    public void showListProducts(String category){
+            if(isCheck_order()){
+                gridPane.getChildren().clear();
+                ObservableList<Products> list = getProductsList(category);
+                var ref = new Object() {
+                    int column = 0;
+                    int row = 1;
+                };
+                list.forEach((product) -> {
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader();
+                        fxmlLoader.setLocation(getClass().getResource("/sample/ItemProduct.fxml"));
+                        AnchorPane anchorPane = fxmlLoader.load();
+                        ItemProductController itemProductController = fxmlLoader.getController();
+                        itemProductController.setData(product, lbTransaction.getText(), lbDate.getText());
+                        anchorPane.setOnMouseClicked(mouseEvent -> {
+                            try{
+                                FXMLLoader fxmlLoader1 = new FXMLLoader();
+                                fxmlLoader1.setLocation(getClass().getResource("/sample/Quantity.fxml"));
+                                AnchorPane anchorPane1 = fxmlLoader1.load();
+                                QuantityController quantityController = fxmlLoader1.getController();
+                                quantityController.setData(product, lbTransaction.getText(), lbDate.getText());
+                                fxmlFile1 = new Scene(anchorPane1);
+                                window = new Stage();
+                                window.setScene(fxmlFile1);
+                                window.initModality(Modality.APPLICATION_MODAL);
+                                window.setAlwaysOnTop(true);
+                                window.setIconified(false);
+                                window.setResizable(false);
+                                window.setTitle("Choose quantity");
+                                window.showAndWait();
+
+                                Connection connection = jdbc.getConnection();
+                                if (jdbc.failed_connect_sever) {
+                                    showAlertConnection();
+                                }
+                                String query = "SELECT quantity FROM products WHERE description = '" + product.getDescription() + "'";
+                                Statement st;
+                                ResultSet rs;
+                                String quantity = null;
+                                try {
+                                    st = connection.createStatement();
+                                    rs = st.executeQuery(query);
+                                    while (rs.next()) {
+                                        quantity = rs.getString("quantity");
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
+                                }
+                                itemProductController.setLableQuantity(quantity);
+
+                            }catch (Exception e){
+                                System.out.println(e.getMessage());
+                            }
+                            showTableOrder(lbTransaction.getText());
+                            showLableMoney(lbTransaction.getText());
+                        });
+
+
+                        if(ref.column == 3){
+                            ref.column = 0;
+                            ref.row ++;
                         }
-                        showTableOrder(lbTransaction.getText());
-                        showLableMoney(lbTransaction.getText());
-                    });
-                    if(ref.column == 3){
-                        ref.column = 0;
-                        ref.row ++;
+                        gridPane.add(anchorPane, ref.column++, ref.row);
+                        GridPane.setMargin(anchorPane, new Insets(10));
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    gridPane.add(anchorPane, ref.column++, ref.row);
-                    GridPane.setMargin(anchorPane, new Insets(10));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
-        }
-        else {
-            showAlertNewOrder();
-        }
+                });
+            }
+            else {
+                showAlertNewOrder();
+            }
+
     }
 
     public void showTableOrder(String transaction){
@@ -555,7 +579,7 @@ public class DashboardController implements Initializable {
             rs = st.executeQuery(query);
             Products product;
             while (rs.next()){
-                product = new Products(rs.getString("description"), rs.getString("price"), rs.getBlob("image"));
+                product = new Products(rs.getString("description"), rs.getString("price"), rs.getString("quantity"), rs.getBlob("image"));
                 productList.add(product);
             }
         }catch (Exception e){

@@ -22,7 +22,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfSearch" layoutX="326.0" layoutY="34.0" />
+      <TextField fx:id="tfSearch" layoutX="326.0" layoutY="34.0" onAction="#search" />
       <Button layoutX="375.0" layoutY="67.0" mnemonicParsing="false" onAction="#search" text="Search" />
       <Label layoutX="366.0" layoutY="105.0" prefHeight="28.0" prefWidth="85.0" text="Show Bills">
          <font>
@@ -50,14 +50,14 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="326.0" layoutY="247.0" mnemonicParsing="false" onAction="#showMonth" prefHeight="25.0" prefWidth="126.0" text="Show by month" />
-      <TextField fx:id="tfMonth" layoutX="366.0" layoutY="175.0" prefHeight="25.0" prefWidth="115.0" />
-      <Label layoutX="307.0" layoutY="210.0" prefHeight="28.0" prefWidth="59.0" text="Date">
+      <Button layoutX="317.0" layoutY="210.0" mnemonicParsing="false" onAction="#showMonth" prefHeight="25.0" prefWidth="126.0" text="Show by month" />
+      <TextField fx:id="tfMonth" layoutX="366.0" layoutY="175.0" onAction="#showMonth" prefHeight="25.0" prefWidth="115.0" />
+      <Label layoutX="303.0" layoutY="246.0" prefHeight="28.0" prefWidth="59.0" text="Date">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="tfDate" layoutX="366.0" layoutY="212.0" prefHeight="25.0" prefWidth="115.0" />
+      <TextField fx:id="tfDate" layoutX="362.0" layoutY="248.0" onAction="#showDate" prefHeight="25.0" prefWidth="115.0" />
       <Button layoutX="326.0" layoutY="280.0" mnemonicParsing="false" onAction="#showDate" prefHeight="25.0" prefWidth="126.0" text="Show by date" />
    </children>
 </AnchorPane>

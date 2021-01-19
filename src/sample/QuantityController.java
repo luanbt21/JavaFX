@@ -8,7 +8,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +33,6 @@ public class QuantityController implements Initializable {
                     showAlertConnection();
                 }
                 int quantity = Integer.parseInt(tfQuantity.getText());
-
                 String query1 = "SELECT quantity FROM products WHERE description = '" + product.getDescription() + "'";
                 Statement st1;
                 ResultSet rs1;
@@ -113,6 +111,7 @@ public class QuantityController implements Initializable {
                     ps2.setString(1, String.valueOf(Integer.parseInt(quant) - quantity));
                     ps2.setString(2, product.getDescription());
                     ps2.executeUpdate();
+
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
