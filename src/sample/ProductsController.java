@@ -119,10 +119,11 @@ public class ProductsController implements Initializable {
             showAlertConnection();
         }
 
-        if(description == null || price == null || category == null || quantity == null || weight == null || imageView.getImage() == null ){
+        if(description == null || price == null || category == null || quantity == null || weight == null || imageView.getImage() == null ) {
             showAlertMissingInformation();
-        }
-        else{
+        }else if(Integer.parseInt(tfQuantity.getText()) < 0){
+            showAlert("please enter quantity greater than 0");
+        } else{
             byte[] blob = imagenToByte(imageView.getImage());
             try{
                 PreparedStatement ps = connection.prepareStatement(
@@ -136,16 +137,16 @@ public class ProductsController implements Initializable {
                 ps.executeUpdate();
                 showAlertInsert(event);
 
+                tfPrice.setText("");
+                tfDescription.setText("");
+                cbWeight.getSelectionModel().clearSelection();
+                tfQuantity.setText("");
+                cbCategory.getSelectionModel().clearSelection();
+                imageView.setImage(null);
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
         }
-        tfPrice.setText("");
-        tfDescription.setText("");
-        cbWeight.getSelectionModel().clearSelection();
-        tfQuantity.setText("");
-        cbCategory.getSelectionModel().clearSelection();
-        imageView.setImage(null);
         showProducts();
     }
 
@@ -197,33 +198,38 @@ public class ProductsController implements Initializable {
         String weight = cbWeight.getValue();
         byte[] blob = imagenToByte(imageView.getImage());
         Products product = tableProducts.getSelectionModel().getSelectedItem();
-        try {
-            Connection connection = jdbc.getConnection();
-            if(jdbc.failed_connect_sever){
-                showAlertConnection();
+
+        if(Integer.parseInt(tfQuantity.getText()) < 0) {
+            showAlert("please enter quantity greater than 0");
+        }else {
+            try {
+                Connection connection = jdbc.getConnection();
+                if (jdbc.failed_connect_sever) {
+                    showAlertConnection();
+                }
+                try {
+                    int pric = Integer.parseInt(price);
+                    int quanti = Integer.parseInt(quantity);
+                } catch (Exception e) {
+                    showAlertInput();
+                }
+                PreparedStatement ps = connection.prepareStatement(
+                        "UPDATE products SET description = ?, price = ?, category = ?, quantity = ?, weight = ?, image = ? WHERE id = ?");
+                ps.setString(1, description);
+                ps.setString(2, price);
+                ps.setString(3, category);
+                ps.setString(4, quantity);
+                ps.setString(5, weight);
+                ps.setBlob(6, new SerialBlob(blob));
+                ps.setInt(7, product.getId());
+                ps.executeUpdate();
+                showAlertUpdate(event);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-            try{
-                int pric = Integer.parseInt(price);
-                int quanti = Integer.parseInt(quantity);
-            }catch (Exception e){
-                showAlertInput();
-            }
-            PreparedStatement ps = connection.prepareStatement(
-                    "UPDATE products SET description = ?, price = ?, category = ?, quantity = ?, weight = ?, image = ? WHERE id = ?");
-            ps.setString(1, description);
-            ps.setString(2, price);
-            ps.setString(3, category);
-            ps.setString(4, quantity);
-            ps.setString(5, weight);
-            ps.setBlob(6, new SerialBlob(blob));
-            ps.setInt(7, product.getId());
-            ps.executeUpdate();
-            showAlertUpdate(event);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            imageView.setImage(null);
+            showProducts();
         }
-        imageView.setImage(null);
-        showProducts();
     }
 
     private void addListenerForTable(){
@@ -420,4 +426,13 @@ public class ProductsController implements Initializable {
         alert.showAndWait();
     }
 
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error alert");
+        alert.setHeaderText("Input status:");
+        alert.setContentText(message);
+        Window window = tfQuantity.getScene().getWindow();
+        alert.initOwner(window);
+        alert.showAndWait();
+    }
 }
