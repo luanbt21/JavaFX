@@ -26,6 +26,8 @@ public class QuantityController implements Initializable {
     void addQuantity(ActionEvent event) {
         if (tfQuantity.getText().equals("")) {
             showAlertInput1();
+        }else if(Integer.parseInt(tfQuantity.getText()) <= 0){
+            showAlert("value less than 0 !");
         } else {
             try {
                 Connection connection = jdbc.getConnection();
@@ -175,6 +177,16 @@ public class QuantityController implements Initializable {
         alert.setTitle("Error alert");
         alert.setHeaderText("Input status:");
         alert.setContentText("Please enter quantity");
+        Window window = tfQuantity.getScene().getWindow();
+        alert.initOwner(window);
+        alert.showAndWait();
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error alert");
+        alert.setHeaderText("Input status:");
+        alert.setContentText(message);
         Window window = tfQuantity.getScene().getWindow();
         alert.initOwner(window);
         alert.showAndWait();

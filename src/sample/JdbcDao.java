@@ -34,7 +34,7 @@ public class JdbcDao {
             return connection;
         }catch (SQLException e){
             failed_connect_sever = true;
+            return null;
         }
-        return null;
     }
 }

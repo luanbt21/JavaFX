@@ -88,42 +88,42 @@ public class DashboardController implements Initializable {
 
     @FXML
     void drinkProducts(ActionEvent event) {
-        Object node = event.getSource();
-        Button b = (Button)node;
-        String category = b.getText();
-        showListProducts(category);
+//        Object node = event.getSource();
+//        Button b = (Button)node;
+//        String category = b.getText();
+        showListProducts("Drinks");
     }
 
     @FXML
     void dessertProducts(ActionEvent event) {
-        Object node = event.getSource();
-        Button b = (Button)node;
-        String category = b.getText();
-        showListProducts(category);
+//        Object node = event.getSource();
+//        Button b = (Button)node;
+//        String category = b.getText();
+        showListProducts("Desserts");
     }
 
     @FXML
     void mealProducts(ActionEvent event) {
-        Object node = event.getSource();
-        Button b = (Button)node;
-        String category = b.getText();
-        showListProducts(category);
+//        Object node = event.getSource();
+//        Button b = (Button)node;
+//        String category = b.getText();
+        showListProducts("Meal");
     }
 
     @FXML
     void snackProducts(ActionEvent event) {
-        Object node = event.getSource();
-        Button b = (Button)node;
-        String category = b.getText();
-        showListProducts(category);
+//        Object node = event.getSource();
+//        Button b = (Button)node;
+//        String category = b.getText();
+        showListProducts("Snack");
     }
 
     @FXML
     void otherProducts(ActionEvent event) {
-        Object node = event.getSource();
-        Button b = (Button)node;
-        String category = b.getText();
-        showListProducts(category);
+//        Object node = event.getSource();
+//        Button b = (Button)node;
+//        String category = b.getText();
+        showListProducts("Others");
     }
 
     @FXML
