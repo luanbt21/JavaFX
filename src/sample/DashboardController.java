@@ -115,7 +115,7 @@ public class DashboardController implements Initializable {
 //        Object node = event.getSource();
 //        Button b = (Button)node;
 //        String category = b.getText();
-        showListProducts("Snack");
+        showListProducts("Snacks");
     }
 
     @FXML
@@ -569,7 +569,7 @@ public class DashboardController implements Initializable {
         String query = "SELECT * FROM products WHERE category = '" + category +"'";
         if(category.equals("Others")){
             query = "SELECT * FROM products WHERE NOT category = 'Drinks' " +
-                    "AND NOT category = 'Meals'  AND NOT category = 'Snacks' AND NOT category = 'Desserts'" +
+                    "AND NOT category = 'Meal'  AND NOT category = 'Snacks' AND NOT category = 'Desserts'" +
                     " GROUP BY category";
         }
         Statement st;
